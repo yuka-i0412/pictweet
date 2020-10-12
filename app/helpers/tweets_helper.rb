@@ -7,3 +7,7 @@ module TweetsHelper
     return raw(html)
   end
 end 
+
+
+
+# <%= render partial: "tweet", locals: { tweet: tweet } %>

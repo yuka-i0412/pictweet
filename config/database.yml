@@ -11,6 +11,7 @@
 #
 default: &default
   adapter: mysql2
+  #↓データの保存形式を変更するため（カリキュラム①） 
   # encoding: utf8mb4
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
