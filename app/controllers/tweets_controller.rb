@@ -4,7 +4,6 @@ class TweetsController < ApplicationController
 
   def index
     @tweets = Tweet.includes(:user).order("created_at DESC")
-    # ビューに受け渡すために@tweetsというインスタンス変数に代入
   end
 
   def new
@@ -18,8 +17,6 @@ class TweetsController < ApplicationController
   def destroy
     tweet = Tweet.find(params[:id])
     tweet.destroy
-    # ビューにツイート情報を受け渡す必要がないのでただの変数
-    # Tweetモデルから特定のidを取り出す→削除
   end
 
   def edit
@@ -40,7 +37,6 @@ class TweetsController < ApplicationController
   end
 
   private
-  # プライベートメソッド…クラス外から呼び出すことができないメソッド
   def tweet_params
     params.require(:tweet).permit(:image, :text).merge(user_id: current_user.id)
   end
@@ -53,38 +49,3 @@ class TweetsController < ApplicationController
     redirect_to action: :index unless user_signed_in?
   end
 end
-
-
-### params.require(:モデル名)　#取得したい情報を指定する
-# 
-# #params  #=> 中身は以下の内容
-# {
-#   "utf8" => "✓",
-#   "authenticity_token" => "token",
-#   "モデルA" => {
-#     "image" => "image.jpg",
-#     "text" => "sample text"
-#   },
-#   "commit" => "SEND",
-#   "controller" => "hoges",
-#   "action" => "create"
-# }
-
-# params.require(:モデルA)
-# #=> { "image" => "image.jpg", "text" => "sample text" }
-
-# params[:モデルA]  # 結果は同じだが、もしモデルAが存在しない場合はエラーになってくれない
-# #=> { "image" => "image.jpg", "text" => "sample text" }
-
-# params.require(:commit)  # モデル名以外のキーも指定できる
-# #=> "SEND"
-
-### params.require(:モデル名).permit(:キー名, :キー名)　#指定したいキーを指定する
-# params.require(:post)
-# #=> { "image" => "image.jpg", "text" => "sample text" }
-
-# params.require(:post).permit(:image)  # imageのみを指定（textは取得されない）
-# #=> { "image" => "image.jpg" }
-
-# params.require(:post).permit(:image, :text)  # 指定したパラメーターだけの取得を約束する
-# #=> { "image" => "image.jpg", "text" => "sample text" }
