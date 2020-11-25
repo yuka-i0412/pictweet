@@ -18,6 +18,7 @@ RSpec.describe "Users", type: :system do
       fill_in 'Password', with: @user.password
       fill_in 'Password confirmation', with: @user.password_confirmation
       # サインアップボタンを押すとユーザーモデルのカウントが1上がる
+      binding.pry
       expect{
         find('input[name="commit"]').click
       }.to change { User.count }.by(1)
@@ -31,6 +32,7 @@ RSpec.describe "Users", type: :system do
       expect(page).to have_no_content('新規登録')
       expect(page).to have_no_content('ログイン')
     end
+    
   end
   context 'ユーザー新規登録ができないとき' do
     it '誤った情報ではユーザー新規登録ができずに新規登録ページへ戻ってくる' do

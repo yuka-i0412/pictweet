@@ -4,4 +4,9 @@
 <% end %>
 <div class="contents row">
   <%= tweet_lists(@tweets) %>
+  <%# ↑ヘルパーメソッドを自作している。app/helpers/tweets_helper.rb %>
+  <%# 元々は下の記述 %>
+  <%# @tweets.each do |tweet| %>
+    <%#= render partial: "tweet", locals: { tweet: tweet } %>
+  <%# end %>
 </div>

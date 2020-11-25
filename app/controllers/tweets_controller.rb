@@ -3,7 +3,12 @@ class TweetsController < ApplicationController
   before_action :move_to_index, except: [:index, :show, :search]
 
   def index
+    # 下記ActiveRecordを使用したインスタンス定義
     @tweets = Tweet.includes(:user).order("created_at DESC")
+
+    # 下記find_by_sqlメソッドを使用してSQLからデータ取得
+    # query = "SELECT * FROM tweets" #SELECT <取得したいデータ> FROM <テーブル名>;でデータベースからデータを取得できる
+    # @tweets = Tweet.find_by_sql(query)
   end
 
   def new
@@ -34,6 +39,7 @@ class TweetsController < ApplicationController
 
   def search
     @tweets = SearchTweetsService.search_tweets(params[:keyword])
+    # 発展カリキュラムでサービスクラス作成、上記の記述を追加
   end
 
   private
@@ -46,6 +52,6 @@ class TweetsController < ApplicationController
   end
 
   def move_to_index
-    redirect_to action: :index unless user_signed_in?
+    redirect_to action: :index unless user_signed_in?&& current_user.id == tweet.user_id
   end
 end
