@@ -13,6 +13,7 @@ RSpec.describe 'ツイート投稿', type: :system do
       # 新規投稿ページへのリンクがある
       expect(page).to have_content('投稿する')
       # 投稿ページに移動する
+      binding.pry
       visit new_tweet_path
       # フォームに情報を入力する
       fill_in 'tweet_image', with: @tweet_image

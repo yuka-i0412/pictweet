@@ -1,6 +1,14 @@
-<h2>Log in</h2>
+<div class="contents row">
+  <div class="container">
+  <h2>Log in</h2>
+  <%# <div class='login-flash-message'>
+    <%= flash[:notice] %>
+    <%#= flash[:alart] %>
+  <%# </div>  %>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <%= form_with model: @user, url: user_session_path, id: 'new_user', class: 'new_user', local: true do |f| %>
+  <%= render 'layouts/error_messages', model: f.object %>
+
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
@@ -21,6 +29,8 @@
   <div class="actions">
     <%= f.submit "Log in" %>
   </div>
-<% end %>
+  <% end %>
+  </div>
+</div>
 
-<%= render "devise/shared/links" %>
+<%# <%= render "devise/shared/links" %>

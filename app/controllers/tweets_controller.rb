@@ -1,6 +1,6 @@
 class TweetsController < ApplicationController
-  before_action :set_tweet, only: [:edit,:show]
-  before_action :move_to_index, except: [:index, :show, :search]
+  before_action :set_tweet, only: [:edit, :update, :destroy, :show]
+  before_action :move_to_index, except: [:index, :new, :create, :show, :search]
 
   def index
     # 下記ActiveRecordを使用したインスタンス定義
@@ -16,20 +16,30 @@ class TweetsController < ApplicationController
   end
 
   def create
-    Tweet.create(tweet_params)
+    # 応用カリキュラムでの記載はこちら
+    # Tweet.create(tweet_params)
+
+    # 下記は追加実装のため追記（エラーメッセージ日本語化）
+    @tweet = Tweet.new(tweet_params)
+    #バリデーションで問題があれば、保存はされず「投稿画面」に戻る
+    if @tweet.valid?
+      @tweet.save
+      redirect_to root_path
+    else
+      #保存されなければ、newに戻る
+      render 'new'
+    end
   end
 
   def destroy
-    tweet = Tweet.find(params[:id])
-    tweet.destroy
+    @tweet.destroy
   end
 
   def edit
   end
 
   def update
-    tweet = Tweet.find(params[:id])
-    tweet.update(tweet_params)
+    @tweet.update(tweet_params)
   end
 
   def show
@@ -52,6 +62,6 @@ class TweetsController < ApplicationController
   end
 
   def move_to_index
-    redirect_to action: :index unless user_signed_in?&& current_user.id == tweet.user_id
+    redirect_to action: :index unless user_signed_in?&& current_user.id == @tweet.user_id
   end
 end

@@ -1,5 +1,7 @@
 class Tweet < ApplicationRecord
-  validates :text, presence: true
+  # 画像も空では投稿できないように設定（追加実装・エラ〜メッセージ日本語化）
+  validates :text, :image, presence: true
+
   belongs_to :user
   has_many :comments
 
